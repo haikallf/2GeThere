@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C50A18B229C4C47F009F0C9F /* Rubik.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C50A18B129C4C36E009F0C9F /* Rubik.ttf */; };
 		DE67E79E29C3916D00E6908F /* _GeThereApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E79D29C3916D00E6908F /* _GeThereApp.swift */; };
 		DE67E7A029C3916D00E6908F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E79F29C3916D00E6908F /* HomeView.swift */; };
 		DE67E7A229C3916E00E6908F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE67E7A129C3916E00E6908F /* Assets.xcassets */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C50A18B029C4C124009F0C9F /* -GeThere-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "-GeThere-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C50A18B129C4C36E009F0C9F /* Rubik.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Rubik.ttf; sourceTree = "<group>"; };
 		DE67E79A29C3916D00E6908F /* 2GeThere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2GeThere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE67E79D29C3916D00E6908F /* _GeThereApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _GeThereApp.swift; sourceTree = "<group>"; };
 		DE67E79F29C3916D00E6908F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -99,10 +102,12 @@
 		DE67E79C29C3916D00E6908F /* 2GeThere */ = {
 			isa = PBXGroup;
 			children = (
+				C50A18B029C4C124009F0C9F /* -GeThere-Info.plist */,
 				DE67E79D29C3916D00E6908F /* _GeThereApp.swift */,
 				DE67E79F29C3916D00E6908F /* HomeView.swift */,
 				DE67E7CA29C3A2D600E6908F /* AuthView.swift */,
 				DE67E7C829C397B300E6908F /* FormView.swift */,
+				C50A18B129C4C36E009F0C9F /* Rubik.ttf */,
 				DE67E7A129C3916E00E6908F /* Assets.xcassets */,
 				DE67E7A329C3916E00E6908F /* _GeThere.entitlements */,
 				DE67E7A429C3916E00E6908F /* Preview Content */,
@@ -240,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE67E7A629C3916E00E6908F /* Preview Assets.xcassets in Resources */,
+				C50A18B229C4C47F009F0C9F /* Rubik.ttf in Resources */,
 				DE67E7A229C3916E00E6908F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,6 +431,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"2GeThere/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "-GeThere-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -461,6 +468,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"2GeThere/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "-GeThere-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
