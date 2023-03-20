@@ -23,7 +23,7 @@ struct HomeView: View {
                         .font(.system(size: 12.0, weight: .medium))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(Color("gray4"))
-                        .padding()
+                        .padding([.top, .bottom])
                     
                     ScrollView {
                         Card()
@@ -37,7 +37,7 @@ struct HomeView: View {
                     
                     Spacer()
                     
-                }.padding([.leading, .trailing], 16)
+                }.padding()
             }
         }
     }
@@ -51,31 +51,35 @@ struct ContentView_Previews: PreviewProvider {
 
 struct Header: View {
     var body: some View {
-       HStack {
-            Spacer()
-            
-            VStack {
-                Text("WELCOME, HAIKAL LAZUARDI!")
-                    .font(.custom("Rubik", size: 12))
-                    .fontWeight(.medium)
-                    .foregroundColor(.white)
-                Text("Afternoon Shift")
-                    .font(.custom("Rubik", size: 12))
-                    .fontWeight(.regular)
-                    .padding(.top, 6)
-                    .foregroundColor(Color("gray1"))
+        ZStack {
+            HStack {
+                Spacer()
+                
+                VStack {
+                    Text("WELCOME, HAIKAL LAZUARDI!")
+                        .font(.custom("Rubik", size: 12))
+                        .fontWeight(.medium)
+                        .foregroundColor(.white)
+                    Text("Afternoon Shift")
+                        .font(.custom("Rubik", size: 12))
+                        .fontWeight(.regular)
+                        .padding(.top, 6)
+                        .foregroundColor(Color("gray1"))
+                }
+                Spacer()
             }
             
             NavigationLink(destination: AuthView()) {
-                VStack{
+                HStack {
+                    Spacer()
+                    
                     Image(systemName: "rectangle.portrait.and.arrow.forward")
                         .font(.system(size: 24.0, weight: .bold))
                         .rotation3DEffect(.degrees(180.0), axis: (x: 0, y: 0, z: 1))
                         .foregroundColor(.white)
                 }
-            }.offset(x: 50, y: 0)
+            }
             
-            Spacer()
         }
         
         Divider()
@@ -91,23 +95,26 @@ struct FormButton: View {
                 HStack {
                     Text("Share a ride with another Academy Learners!")
                         .font(.custom("Rubik", size: 24))
-                        .fontWeight(.thin)
+                        .fontWeight(.regular)
                         .frame(maxWidth: 270, alignment: .leading)
                         .multilineTextAlignment(.leading)
                 }
                 
                 Image(systemName: "arrow.right")
                     .font(.system(size: 24.0, weight: .bold))
-                    .opacity(0.5)
+                    .opacity(0.4)
                     .padding(.top, 1)
                 
             }
+            .offset(x: -20)
+            .frame(maxWidth: .infinity)
             .padding([.top, .bottom], 16)
-            .padding([.leading, .trailing], 32)
             .foregroundColor(.black)
             .background(Color("yellow"))
             .cornerRadius(10)
-        }.padding(.top)
+        }
+        .buttonStyle(.plain)
+        .padding(.top)
     }
 }
 
@@ -179,7 +186,7 @@ struct Card: View {
                 
             }
         }
-        .frame(width: 305, height: 100)
+        .frame(maxWidth: .infinity, maxHeight: 100)
         .padding()
         .background(Color("gray3"))
         .cornerRadius(15)
