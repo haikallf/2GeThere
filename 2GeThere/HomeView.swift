@@ -19,7 +19,7 @@ struct HomeView: View {
                     
                     FormButton()
                     
-                    Text("SHOWING 20 TRIPS")
+                    Text("SHOWING 20 TRIP(S)")
                         .font(.system(size: 12.0, weight: .medium))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(Color("gray4"))
@@ -131,6 +131,7 @@ struct Card: View {
                         .fontWeight(.medium)
                 }
                 .foregroundColor(Color("gray1"))
+                .padding(.bottom, 4)
                 
                 Spacer()
                 
@@ -157,6 +158,7 @@ struct Card: View {
                             .font(.custom("Rubik", size: 12))
                     }
                 }
+                .padding(.top, 4)
                 
                 
             }.foregroundColor(.white)
