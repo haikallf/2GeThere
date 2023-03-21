@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
 
 struct HomeView: View {
+    @EnvironmentObject var dataManager: DataManager
+    
     var body: some View {
         NavigationView {
             ZStack{
@@ -26,13 +30,9 @@ struct HomeView: View {
                         .padding([.top, .bottom])
                     
                     ScrollView {
-                        Card()
-                        
-                        Card()
-                        
-                        Card()
-                        
-                        Card()
+                        ForEach($dataManager.trips, id: \.id) { trip in
+                            Card(id: trip.id, phone: trip.phone, fullname: trip.fullname, location: trip.location, license: trip.license, arrival: trip.arrival, departure: trip.departure, color: trip.color, vehicletype: trip.vehicletype, capacity: trip.capacity, members: trip.members)
+                        }
                     }
                     
                     Spacer()
@@ -119,6 +119,41 @@ struct FormButton: View {
 }
 
 struct Card: View {
+    @Binding var id: String
+    @Binding var phone: String
+    @Binding var fullname: String
+    @Binding var location: String
+    @Binding var license: String
+    @Binding var arrival: Date
+    @Binding var departure: Date
+    @Binding var color: String
+    @Binding var vehicletype: String
+    @Binding var capacity: Int
+    @Binding var members: [String]
+    
+    @EnvironmentObject var dataManager: DataManager
+    
+    
+    func formatTime(time: Date) -> String {
+        let dateFormatterTemplate = DateFormatter()
+        dateFormatterTemplate.setLocalizedDateFormatFromTemplate("HH:mm")
+        return dateFormatterTemplate.string(from: time)
+    }
+    
+    func getCapacity(members: String) -> Int {
+        var array = members.components(separatedBy: "++")
+        array = array.filter({ $0 != ""})
+        return array.count
+    }
+    
+//    @MainActor
+//    func loadMembers() {
+//        async {
+//            members = try await dataManager.getCapacity(tripid: "1")
+//        }
+//    }
+//    
+    
     var body: some View {
         HStack {
             VStack (alignment: .leading){
@@ -126,7 +161,7 @@ struct Card: View {
                     Image(systemName: "location.north.fill")
                         .font(.system(size: 12.0, weight: .regular))
                     
-                    Text("LOCATION")
+                    Text("\(location)")
                         .font(.custom("Rubik", size: 12))
                         .fontWeight(.medium)
                 }
@@ -135,12 +170,11 @@ struct Card: View {
                 
                 Spacer()
                 
-                
-                Text("13.00 - 13.10")
+                Text("\(arrival, format: Date.FormatStyle().month().day()) • \(formatTime(time:arrival)) - \(departure, format: Date.FormatStyle().hour().minute())")
                     .font(.custom("Rubik", size: 14))
                     .fontWeight(.medium)
                 
-                Text("Raize • B 1234 XYZ")
+                Text("\(vehicletype.capitalized) • \(license.uppercased()) • \(color.capitalized)")
                     .font(.custom("Rubik", size: 12))
                     .fontWeight(.regular)
                 
@@ -151,10 +185,10 @@ struct Card: View {
                         .font(.system(size: 24.0, weight: .regular))
                     
                     VStack (alignment: .leading) {
-                        Text("Haikal Lazuardi")
+                        Text("\(fullname)")
                             .font(.custom("Rubik", size: 12))
                         
-                        Text("+62 81219083250")
+                        Text("+62 \(phone)")
                             .font(.custom("Rubik", size: 12))
                     }
                 }
@@ -172,20 +206,22 @@ struct Card: View {
                 
                 Spacer()
                 
-                Text("2/6 Person")
+                Text("\(members.count)/\(capacity) Person")
                     .font(.system(size: 12.0, weight: .bold))
                     .foregroundColor(.white)
                 
                 Spacer()
                 
-                Text("Join")
-                    .frame(width: 92, height: 37)
-                    .font(.system(size: 14.0, weight: .medium))
-                    .foregroundColor(Color("yellow"))
-                    .background(Color("primaryColor"))
-                    .cornerRadius(15)
-                    
-                
+                Button {
+                    print("Join")
+                } label: {
+                    Text("Join")
+                        .frame(width: 92, height: 37)
+                        .font(.system(size: 14.0, weight: .medium))
+                        .foregroundColor(Color("yellow"))
+                        .background(Color("primaryColor"))
+                        .cornerRadius(15)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: 100)
