@@ -23,7 +23,7 @@ struct HomeView: View {
                     
                     FormButton()
                     
-                    Text("SHOWING 20 TRIP(S)")
+                    Text("SHOWING \(dataManager.trips.count) TRIP(S)")
                         .font(.system(size: 12.0, weight: .medium))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(Color("gray4"))
