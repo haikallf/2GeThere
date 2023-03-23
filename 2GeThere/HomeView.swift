@@ -6,61 +6,63 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 struct HomeView: View {
+    @Binding var isUserCurrentlyLoggedOut: Bool
+    @EnvironmentObject var dataManager: DataManager
+    
     var body: some View {
         NavigationView {
-            ZStack{
+            ZStack {
                 Color("primaryColor")
                     .ignoresSafeArea()
                 
                 VStack {
-                    Header()
+                    Header(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut, dataManager: _dataManager)
                     
                     FormButton()
                     
-                    Text("SHOWING 20 TRIP(S)")
+                    Text("SHOWING \(dataManager.trips.count) TRIP(S)")
                         .font(.system(size: 12.0, weight: .medium))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(Color("gray4"))
                         .padding([.top, .bottom])
                     
                     ScrollView {
-                        Card()
-                        
-                        Card()
-                        
-                        Card()
-                        
-                        Card()
+                        ForEach($dataManager.trips, id: \.id) { trip in
+                            Card(id: trip.id, phone: trip.phone, fullname: trip.fullname, location: trip.location, license: trip.license, arrival: trip.arrival, departure: trip.departure, color: trip.color, vehicletype: trip.vehicletype, capacity: trip.capacity, members: trip.members)
+                        }
                     }
                     
                     Spacer()
                     
-                }.padding()
+                }
             }
         }
     }
+    
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-    }
-}
 
 struct Header: View {
+    @Binding var isUserCurrentlyLoggedOut: Bool
+    @EnvironmentObject var dataManager: DataManager
+    
     var body: some View {
         ZStack {
             HStack {
                 Spacer()
                 
                 VStack {
-                    Text("WELCOME, HAIKAL LAZUARDI!")
+                    Text("WELCOME, \(dataManager.currentUser.fullname ?? "")!")
                         .font(.custom("Rubik", size: 12))
                         .fontWeight(.medium)
                         .foregroundColor(.white)
-                    Text("Afternoon Shift")
+                        .textCase(.uppercase)
+                    Text("\(dataManager.currentUser.shift?.capitalized ?? "") Shift")
                         .font(.custom("Rubik", size: 12))
                         .fontWeight(.regular)
                         .padding(.top, 6)
@@ -68,11 +70,21 @@ struct Header: View {
                 }
                 Spacer()
             }
+        
             
-            NavigationLink(destination: AuthView()) {
+            Button {
+                let firebaseAuth = Auth.auth()
+                do {
+                  try firebaseAuth.signOut()
+                } catch let signOutError as NSError {
+                  print("Error signing out: %@", signOutError)
+                }
+                isUserCurrentlyLoggedOut = true
+            
+            } label: {
                 HStack {
                     Spacer()
-                    
+
                     Image(systemName: "rectangle.portrait.and.arrow.forward")
                         .font(.system(size: 24.0, weight: .bold))
                         .rotation3DEffect(.degrees(180.0), axis: (x: 0, y: 0, z: 1))
@@ -119,6 +131,33 @@ struct FormButton: View {
 }
 
 struct Card: View {
+    @Binding var id: String
+    @Binding var phone: String
+    @Binding var fullname: String
+    @Binding var location: String
+    @Binding var license: String
+    @Binding var arrival: Date
+    @Binding var departure: Date
+    @Binding var color: String
+    @Binding var vehicletype: String
+    @Binding var capacity: Int
+    @Binding var members: [String]
+    
+    @EnvironmentObject var dataManager: DataManager
+    
+    
+    func formatTime(time: Date) -> String {
+        let dateFormatterTemplate = DateFormatter()
+        dateFormatterTemplate.setLocalizedDateFormatFromTemplate("HH:mm")
+        return dateFormatterTemplate.string(from: time)
+    }
+    
+    func getCapacity(members: String) -> Int {
+        var array = members.components(separatedBy: "++")
+        array = array.filter({ $0 != ""})
+        return array.count
+    }
+    
     var body: some View {
         HStack {
             VStack (alignment: .leading){
@@ -126,7 +165,7 @@ struct Card: View {
                     Image(systemName: "location.north.fill")
                         .font(.system(size: 12.0, weight: .regular))
                     
-                    Text("LOCATION")
+                    Text("\(location)")
                         .font(.custom("Rubik", size: 12))
                         .fontWeight(.medium)
                 }
@@ -135,12 +174,11 @@ struct Card: View {
                 
                 Spacer()
                 
-                
-                Text("13.00 - 13.10")
+                Text("\(arrival, format: Date.FormatStyle().month().day()) • \(formatTime(time:arrival)) - \(departure, format: Date.FormatStyle().hour().minute())")
                     .font(.custom("Rubik", size: 14))
                     .fontWeight(.medium)
                 
-                Text("Raize • B 1234 XYZ")
+                Text("\(vehicletype.capitalized) • \(license.uppercased()) • \(color.capitalized)")
                     .font(.custom("Rubik", size: 12))
                     .fontWeight(.regular)
                 
@@ -151,10 +189,10 @@ struct Card: View {
                         .font(.system(size: 24.0, weight: .regular))
                     
                     VStack (alignment: .leading) {
-                        Text("Haikal Lazuardi")
+                        Text("\(fullname)")
                             .font(.custom("Rubik", size: 12))
                         
-                        Text("+62 81219083250")
+                        Text("+62 \(phone)")
                             .font(.custom("Rubik", size: 12))
                     }
                 }
@@ -172,20 +210,22 @@ struct Card: View {
                 
                 Spacer()
                 
-                Text("2/6 Person")
+                Text("\(members.count)/\(capacity) Person")
                     .font(.system(size: 12.0, weight: .bold))
                     .foregroundColor(.white)
                 
                 Spacer()
                 
-                Text("Join")
-                    .frame(width: 92, height: 37)
-                    .font(.system(size: 14.0, weight: .medium))
-                    .foregroundColor(Color("yellow"))
-                    .background(Color("primaryColor"))
-                    .cornerRadius(15)
-                    
-                
+                Button {
+                    print("Join")
+                } label: {
+                    Text("Join")
+                        .frame(width: 92, height: 37)
+                        .font(.system(size: 14.0, weight: .medium))
+                        .foregroundColor(Color("yellow"))
+                        .background(Color("primaryColor"))
+                        .cornerRadius(15)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: 100)

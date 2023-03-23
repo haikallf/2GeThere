@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   uuid = "4C06318F-2A60-49CD-8D5D-5AFB2FCC1339"
+   uuid = "D2E3191A-C27F-40FD-8C34-F46DAB3536AA"
    type = "1"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EC57D213-A29D-4CA3-9BDB-0D79B2A289A2"
-            shouldBeEnabled = "No"
+            uuid = "2C56F8B7-6025-40C6-A606-6251A6D27C65"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "2GeThere/HomeView.swift"
+            filePath = "authview/ContentView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "Header"
-            landmarkType = "14">
+            startingLineNumber = "5"
+            endingLineNumber = "5"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
