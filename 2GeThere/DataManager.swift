@@ -10,7 +10,7 @@ import Firebase
 
 class DataManager: ObservableObject {
     @Published var trips: [Trip] = []
-    @Published var currentUser: User = User(id: nil, email: nil, fullname: nil, phone: nil)
+    @Published var currentUser: User = User(email: nil, fullname: nil, phone: nil, shift: nil)
     
     init() {
         fetchTrips()
@@ -54,10 +54,9 @@ class DataManager: ObservableObject {
         }
     }
     
-    func fetchUserByPhone(phone: String = "81219083250") -> User {
-        var user = User(id: nil, email: nil, fullname: nil, phone: nil)
+    func setCurrentUser(currentEmail: String) {
         let db = Firestore.firestore()
-        let ref = db.collection("Users").whereField("phone", isEqualTo: phone)
+        let ref = db.collection("Users")
         ref.getDocuments {
             snapshot, error in
             guard error == nil else {
@@ -68,19 +67,58 @@ class DataManager: ObservableObject {
             if let snapshot = snapshot {
                 for document in snapshot.documents {
                     let data = document.data()
-                    
-                    let id = data["id"] as? String ?? ""
                     let email = data["email"] as? String ?? ""
-                    let fullname = data["fullname"] as? String ?? ""
-                    let phone = data["phone"] as? String ?? ""
-                    
-                    user =  User(id: id, email: email, fullname: fullname, phone: phone)
+                    if (email == currentEmail) {
+                        let email = data["email"] as? String ?? ""
+                        let fullname = data["fullname"] as? String ?? ""
+                        let phone = data["phone"] as? String ?? ""
+                        let shift = data["shift"] as? String ?? ""
+                        self.currentUser = User(email: email, fullname: fullname, phone: phone, shift: shift)
+                    }
                 }
             }
         }
-        return user
-        
     }
+    
+    func addNewUser(email: String, fullname: String, phone: String, shift: String) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let userData = ["email": email, "fullname": fullname, "phone": phone, "shift": shift, "uid": uid]
+        Firestore.firestore().collection("Users")
+            .document(uid).setData(userData) { err in
+                if let err = err {
+                    print(err)
+                    return
+                }
+            }
+    }
+    
+//    func fetchUserByPhone(phone: String = "81219083250") -> User {
+//        var user = User(id: nil, email: nil, fullname: nil, phone: nil)
+//        let db = Firestore.firestore()
+//        let ref = db.collection("Users").whereField("phone", isEqualTo: phone)
+//        ref.getDocuments {
+//            snapshot, error in
+//            guard error == nil else {
+//                print(error!.localizedDescription)
+//                return
+//            }
+//
+//            if let snapshot = snapshot {
+//                for document in snapshot.documents {
+//                    let data = document.data()
+//                    
+//                    let id = data["id"] as? String ?? ""
+//                    let email = data["email"] as? String ?? ""
+//                    let fullname = data["fullname"] as? String ?? ""
+//                    let phone = data["phone"] as? String ?? ""
+//
+//                    user =  User(id: id, email: email, fullname: fullname, phone: phone)
+//                }
+//            }
+//        }
+//        return user
+//
+//    }
     
     func getCapacity(tripid: String = "0") async -> Int {
         var capacity: Int = 0
@@ -95,11 +133,6 @@ class DataManager: ObservableObject {
             
             if let snapshot = snapshot {
                 for _ in snapshot.documents {
-//                    let data = document.data()
-//                    let id = data["id"] as? String ?? ""
-//                    let tripid = data["tripid"] as? String ?? ""
-//                    let sharerider = data["sharerider"] as? String ?? ""
-//                    let member = data["member"] as? String ?? ""
                     capacity = capacity + 1
                 }
             }
@@ -108,29 +141,4 @@ class DataManager: ObservableObject {
         return capacity
     }
     
-//    func getCapacity2(tripid: String = "0") async throws -> [Member] {
-//        var members: [Member] = []
-//        let db = Firestore.firestore()
-//        let ref = db.collection("Members").whereField("tripid", isEqualTo: tripid)
-//        ref.getDocuments {
-//            snapshot, error in
-//            guard error == nil else {
-//                print(error!.localizedDescription)
-//                return
-//            }
-//
-//            if let snapshot = snapshot {
-//                for document in snapshot.documents {
-//                    let data = document.data()
-//                    let id = data["id"] as? String ?? ""
-//                    let tripid = data["tripid"] as? String ?? ""
-//                    let sharerider = data["sharerider"] as? String ?? ""
-//                    let member = data["member"] as? String ?? ""
-//
-//                    members.append(Member(id: id, tripid: tripid, sharerider: sharerider, member: member))
-//                }
-//            }
-//        }
-//        return members
-//    }
 }

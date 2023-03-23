@@ -9,9 +9,9 @@ import Foundation
 
 import Foundation
 
-struct User: Identifiable {
-    var id: String?
+struct User {
     var email: String?
     var fullname: String?
     var phone: String?
+    var shift: String?
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C50A18B229C4C47F009F0C9F /* Rubik.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C50A18B129C4C36E009F0C9F /* Rubik.ttf */; };
+		C585B4F729CCA91C00C61AD8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C585B4F629CCA91C00C61AD8 /* ContentView.swift */; };
 		DE67E79E29C3916D00E6908F /* _GeThereApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E79D29C3916D00E6908F /* _GeThereApp.swift */; };
 		DE67E7A029C3916D00E6908F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE67E79F29C3916D00E6908F /* HomeView.swift */; };
 		DE67E7A229C3916E00E6908F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE67E7A129C3916E00E6908F /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		C50A18B029C4C124009F0C9F /* -GeThere-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "-GeThere-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C50A18B129C4C36E009F0C9F /* Rubik.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Rubik.ttf; sourceTree = "<group>"; };
+		C585B4F629CCA91C00C61AD8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DE67E79A29C3916D00E6908F /* 2GeThere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2GeThere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE67E79D29C3916D00E6908F /* _GeThereApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _GeThereApp.swift; sourceTree = "<group>"; };
 		DE67E79F29C3916D00E6908F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				C50A18B029C4C124009F0C9F /* -GeThere-Info.plist */,
 				DE67E79D29C3916D00E6908F /* _GeThereApp.swift */,
 				DE67E79F29C3916D00E6908F /* HomeView.swift */,
+				C585B4F629CCA91C00C61AD8 /* ContentView.swift */,
 				DEE0D38829C9A55100A0DA56 /* DataManager.swift */,
 				DEE0D38C29CA461600A0DA56 /* Member.swift */,
 				DEE0D38629C9A11300A0DA56 /* Trip.swift */,
@@ -303,6 +306,7 @@
 				DE67E7C929C397B300E6908F /* FormView.swift in Sources */,
 				DE67E7A029C3916D00E6908F /* HomeView.swift in Sources */,
 				DE67E7CB29C3A2D600E6908F /* AuthView.swift in Sources */,
+				C585B4F729CCA91C00C61AD8 /* ContentView.swift in Sources */,
 				DE67E79E29C3916D00E6908F /* _GeThereApp.swift in Sources */,
 				DEE0D38B29C9C54C00A0DA56 /* User.swift in Sources */,
 				DEE0D38D29CA461600A0DA56 /* Member.swift in Sources */,
