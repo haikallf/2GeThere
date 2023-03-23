@@ -8,18 +8,20 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import FirebaseAuth
 
 struct HomeView: View {
+    @Binding var isUserCurrentlyLoggedOut: Bool
     @EnvironmentObject var dataManager: DataManager
     
     var body: some View {
         NavigationView {
-            ZStack{
+            ZStack {
                 Color("primaryColor")
                     .ignoresSafeArea()
                 
                 VStack {
-                    Header()
+                    Header(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut, dataManager: _dataManager)
                     
                     FormButton()
                     
@@ -37,30 +39,30 @@ struct HomeView: View {
                     
                     Spacer()
                     
-                }.padding()
+                }
             }
         }
     }
+    
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
-    }
-}
 
 struct Header: View {
+    @Binding var isUserCurrentlyLoggedOut: Bool
+    @EnvironmentObject var dataManager: DataManager
+    
     var body: some View {
         ZStack {
             HStack {
                 Spacer()
                 
                 VStack {
-                    Text("WELCOME, HAIKAL LAZUARDI!")
+                    Text("WELCOME, \(dataManager.currentUser.fullname ?? "")!")
                         .font(.custom("Rubik", size: 12))
                         .fontWeight(.medium)
                         .foregroundColor(.white)
-                    Text("Afternoon Shift")
+                        .textCase(.uppercase)
+                    Text("\(dataManager.currentUser.shift?.capitalized ?? "") Shift")
                         .font(.custom("Rubik", size: 12))
                         .fontWeight(.regular)
                         .padding(.top, 6)
@@ -68,11 +70,21 @@ struct Header: View {
                 }
                 Spacer()
             }
+        
             
-            NavigationLink(destination: AuthView()) {
+            Button {
+                let firebaseAuth = Auth.auth()
+                do {
+                  try firebaseAuth.signOut()
+                } catch let signOutError as NSError {
+                  print("Error signing out: %@", signOutError)
+                }
+                isUserCurrentlyLoggedOut = true
+            
+            } label: {
                 HStack {
                     Spacer()
-                    
+
                     Image(systemName: "rectangle.portrait.and.arrow.forward")
                         .font(.system(size: 24.0, weight: .bold))
                         .rotation3DEffect(.degrees(180.0), axis: (x: 0, y: 0, z: 1))
@@ -145,14 +157,6 @@ struct Card: View {
         array = array.filter({ $0 != ""})
         return array.count
     }
-    
-//    @MainActor
-//    func loadMembers() {
-//        async {
-//            members = try await dataManager.getCapacity(tripid: "1")
-//        }
-//    }
-//    
     
     var body: some View {
         HStack {
