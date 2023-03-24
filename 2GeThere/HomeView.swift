@@ -249,9 +249,8 @@ struct Card: View {
                                     .frame(width: 92, height: 37)
                                     .font(.system(size: 14.0, weight: .medium))
                                     .foregroundColor(Color("yellow"))
-                                    .background(Color("primaryColor"))
                                     .cornerRadius(15)
-                            }
+                            }.disabled(true)
                         } else {
                             Button {
                                 addMember()
