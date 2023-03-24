@@ -18,7 +18,7 @@ struct AuthView: View {
     @State var pin: String =  ""
     @State var phone: String =  ""
     @State var fullname: String =  ""
-    @State var shift: String = "Morning Boys"
+    @State var shift: String = "Morning Boys Broken Branch"
     
     @State var showingAlert = false
     @State var alertMessage = ""
