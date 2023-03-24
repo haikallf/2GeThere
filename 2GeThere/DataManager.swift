@@ -91,34 +91,29 @@ class DataManager: ObservableObject {
                 }
             }
     }
-    
-//    func fetchUserByPhone(phone: String = "81219083250") -> User {
-//        var user = User(id: nil, email: nil, fullname: nil, phone: nil)
-//        let db = Firestore.firestore()
-//        let ref = db.collection("Users").whereField("phone", isEqualTo: phone)
-//        ref.getDocuments {
-//            snapshot, error in
-//            guard error == nil else {
-//                print(error!.localizedDescription)
-//                return
-//            }
-//
-//            if let snapshot = snapshot {
-//                for document in snapshot.documents {
-//                    let data = document.data()
-//                    
-//                    let id = data["id"] as? String ?? ""
-//                    let email = data["email"] as? String ?? ""
-//                    let fullname = data["fullname"] as? String ?? ""
-//                    let phone = data["phone"] as? String ?? ""
-//
-//                    user =  User(id: id, email: email, fullname: fullname, phone: phone)
-//                }
-//            }
-//        }
-//        return user
-//
-//    }
+        
+    func updateCapacity(tripid: String, members: [String]) {
+        let preprocessedMembers = members.joined(separator: "++")
+        let db = Firestore.firestore()
+        let users = db.collection("Trips")
+        users.whereField("id", isEqualTo: tripid).limit(to: 1).getDocuments(completion: { querySnapshot, error in
+            if let err = error {
+                print(err.localizedDescription)
+                return
+            }
+
+            guard let docs = querySnapshot?.documents else { return }
+
+            for doc in docs {
+                let docId = doc.documentID
+//                let name = doc.get("name")
+//                print(docId, name)
+
+                let ref = doc.reference
+                ref.updateData(["members": preprocessedMembers])
+            }
+        })
+    }
     
     func getCapacity(tripid: String = "0") async -> Int {
         var capacity: Int = 0

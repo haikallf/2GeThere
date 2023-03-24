@@ -158,6 +158,18 @@ struct Card: View {
         return array.count
     }
     
+    func removeMember() {
+        if let index = self.members.firstIndex(of: dataManager.currentUser.phone ?? "") {
+            self.members.remove(at: index)
+        }
+        dataManager.updateCapacity(tripid: self.id, members: self.members)
+    }
+    
+    func addMember() {
+        self.members.append(dataManager.currentUser.phone ?? "")
+        dataManager.updateCapacity(tripid: self.id, members: self.members)
+    }
+    
     var body: some View {
         HStack {
             VStack (alignment: .leading){
@@ -216,16 +228,46 @@ struct Card: View {
                 
                 Spacer()
                 
-                Button {
-                    print("Join")
-                } label: {
-                    Text("Join")
-                        .frame(width: 92, height: 37)
-                        .font(.system(size: 14.0, weight: .medium))
-                        .foregroundColor(Color("yellow"))
-                        .background(Color("primaryColor"))
-                        .cornerRadius(15)
+                if (dataManager.currentUser.phone != phone) {
+                    if (members.contains(dataManager.currentUser.phone ?? "")) {
+                        Button {
+                            removeMember()
+                        } label: {
+                            Text("Cancel")
+                                .frame(width: 92, height: 37)
+                                .font(.system(size: 14.0, weight: .medium))
+                                .foregroundColor(Color("yellow"))
+                                .background(Color("primaryColor"))
+                                .cornerRadius(15)
+                        }
+                    } else {
+                        if (members.count == capacity) {
+                            Button {
+                                print("Join Button")
+                            } label: {
+                                Text("FULL")
+                                    .frame(width: 92, height: 37)
+                                    .font(.system(size: 14.0, weight: .medium))
+                                    .foregroundColor(Color("yellow"))
+                                    .background(Color("primaryColor"))
+                                    .cornerRadius(15)
+                            }
+                        } else {
+                            Button {
+                                addMember()
+                            } label: {
+                                Text("Join")
+                                    .frame(width: 92, height: 37)
+                                    .font(.system(size: 14.0, weight: .medium))
+                                    .foregroundColor(Color("yellow"))
+                                    .background(Color("primaryColor"))
+                                    .cornerRadius(15)
+                            }
+                        }
+                    }
+                    
                 }
+                
             }
         }
         .frame(maxWidth: .infinity, maxHeight: 100)
