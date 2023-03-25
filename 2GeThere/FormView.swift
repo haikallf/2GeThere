@@ -21,10 +21,11 @@ struct FormView: View {
             ZStack{
                 Color("primaryColor")
                     .ignoresSafeArea()
+                Header1()
                 
                 VStack {
                     
-                    Header1()
+
                     
                     VStack {
                         VStack (alignment: .leading){
