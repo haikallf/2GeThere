@@ -48,6 +48,7 @@ class DataManager: ObservableObject {
                     
                     let trip = Trip(id: id, phone: phone, fullname: fullname, location: location, license: license, arrival: arrival, departure: departure, color: color, vehicletype: vehicletype, capacity: capacity, members: array)
                     
+                    print("masuk")
                     self.trips.append(trip)
                 }
             }
@@ -90,6 +91,22 @@ class DataManager: ObservableObject {
                     return
                 }
             }
+    }
+    
+    func addNewTrip(location: String, date: Date, arrival: Date, departure: Date, vehicletype: String, color: String, license: String, capacity: Int, fullname: String, phone: String, members: String = "", tripid: String = UUID().uuidString) {
+        let tripData = ["location": location, "date": date, "arrival": arrival, "departure": departure, "vehicletype": vehicletype, "color": color, "license": license,  "capacity": capacity, "fullname": fullname, "phone": phone, "members": members, "id": tripid] as [String : Any]
+        
+        let db = Firestore.firestore()
+
+        let docRef = db.collection("Trips").document()
+
+        docRef.setData(tripData) { error in
+            if let error = error {
+                print("Error writing document: \(error)")
+            } else {
+                print("Document successfully written!")
+            }
+        }
     }
         
     func updateCapacity(tripid: String, members: [String]) {

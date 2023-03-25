@@ -1,152 +1,131 @@
 //
-//  FormView.swift
-//  2GeThere
+//  ContentView.swift
+//  FormViewTrip
 //
-//  Created by Haikal Lazuardi Fadil on 17/03/23.
+//  Created by Geraldy Kumara on 25/03/23.
 //
 
 import SwiftUI
 
 struct FormView: View {
     @State private var location: String = ""
-    @State private var meetMe: String = ""
-    @State private var departAt: String = ""
+    @State private var date = Date()
+    @State private var arrival = Date()
+    @State private var departure = Date()
     @State private var vehicleType: String = ""
-    @State private var vehicileColor: String = ""
+    @State private var vehicleColor: String = ""
     @State private var licensePlate: String = ""
-    @State private var capacity: Int = 1
+    @State private var capacity: Int = 0
+    
+    @EnvironmentObject var dataManager: DataManager
     
     var body: some View {
-        
-            ZStack{
-                Color("primaryColor")
-                    .ignoresSafeArea()
-                
                 VStack {
                     
                     Header1()
                     
                     VStack {
                         VStack (alignment: .leading){
-                                Section(header: Text("PREFERRED RENDEZVOUS")){
-                                    TextField("McD Plaza Sentral", text: $location)
-                                        .foregroundColor(.white)
-                                    }
-                                .buttonStyle(.bordered)
-                                .foregroundColor(.gray)
+                                TextField("Location", text: $location)
+                                .padding(20)
+                                .frame(maxWidth: 315, maxHeight: 60)
+                                .foregroundColor(.black)
+                                .font(.system(size: 15))
+                                .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
+                        }
+
+                        VStack (alignment: .leading){
+                            DatePicker("Date", selection: $date, in: Date()..., displayedComponents: .date)
+                                .padding(20)
+                                .frame(maxWidth: 315, maxHeight: 60)
+                                .foregroundColor(Color("Gray"))
+                                .font(.system(size: 15))
+                                .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
+                        }                       .padding(.top, 13)
+
+                        
+                        VStack (alignment: .leading){
+                            DatePicker("Arrival", selection: $arrival, in: date..., displayedComponents: .hourAndMinute)
+                                .padding(20)
+                                .frame(maxWidth: 315, maxHeight: 60)
+                                .foregroundColor(Color("Gray"))
+                                .font(.system(size: 15))
+                                .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
+                        }                       .padding(.top, 13)
+                            
+                        VStack (alignment: .leading){
+                            DatePicker("Departure", selection: $departure, in: date..., displayedComponents: .hourAndMinute)
+                                .padding(20)
+                                .frame(maxWidth: 315, maxHeight: 60)
+                                .foregroundColor(Color("Gray"))
+                                .font(.system(size: 15))
+                                .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
+                        }                       .padding(.top, 13)
+                        
+                        HStack {
+                            VStack (alignment: .leading){
+                                TextField("Vehicle Type", text: $vehicleType)
+                                .padding(20)
+                                .frame(maxWidth: 147.5)
+                                .font(.system(size: 15))
+                                .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
                             }
-                        .frame(maxWidth: 335, maxHeight: 60)
-                        .padding([.top, .leading])
-                        .padding(.bottom, 10)
-                        .background(Color("gray3"))
-                        .cornerRadius(15)
+                            
+                            
+                            VStack (alignment: .leading){
+                                TextField("Vehicle Color", text: $vehicleColor)
+                                    .foregroundColor(.black)
+                                    .padding(20)
+                                    .frame(maxWidth: 147.5)
+                                    .font(.system(size: 15))
+                                    .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
+                            }
+                            .padding(.leading, 12)
+                        }
+                        .padding(.top, 13)
                         
                         HStack {
                             VStack (alignment: .leading){
-                                    Section(header: Text("MEET ME")){
-                                        TextField("13.48", text: $meetMe)
-                                            .foregroundColor(.white)
-                                        }
-                                    .buttonStyle(.bordered)
-                                    .foregroundColor(.gray)
-                                }
-                            .frame(maxWidth: 147.5, maxHeight: 60)
-                            .padding([.top, .leading])
-                            .padding(.bottom, 10)
-                            .background(Color("gray3"))
-                            .cornerRadius(15)
+                                TextField("License Plate", text: $licensePlate)
+                                    .foregroundColor(.black)
+                                    .padding(20)
+                                    .frame(maxWidth: 147.5)
+                                    .font(.system(size: 15))
+                                    .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
+                            }
                             
                             VStack (alignment: .leading){
-                                    Section(header: Text("DEPART AT")){
-                                        TextField("13.58", text: $departAt)
-                                            .foregroundColor(.white)
-                                        }
-                                    .buttonStyle(.bordered)
-                                    .foregroundColor(.gray)
+                                TextField("Capacity", value: $capacity, formatter: NumberFormatter())
+                                    .foregroundColor(.black)
+                                    .padding(20)
+                                    .frame(maxWidth: 147.5)
+                                    .font(.system(size: 15))
+                                    .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
                                 }
-                            .frame(maxWidth: 147.5, maxHeight: 60)
-                            .padding([.top, .leading])
-                            .padding(.bottom, 10)
-                            .background(Color("gray3"))
-                            .cornerRadius(15)
+                            .padding(.leading, 12)
                         }
-                        .padding(.top, 10)
-                        
-                        HStack {
-                            VStack (alignment: .leading){
-                                    Section(header: Text("VEHICLE TYPE")){
-                                        TextField("Raize", text: $vehicleType)
-                                            .foregroundColor(.white)
-                                        }
-                                    .buttonStyle(.bordered)
-                                    .foregroundColor(.gray)
-                                }
-                            .frame(maxWidth: 147.5, maxHeight: 60)
-                            .padding([.top, .leading])
-                            .padding(.bottom, 10)
-                            .background(Color("gray3"))
-                            .cornerRadius(15)
-                            
-                            VStack (alignment: .leading){
-                                    Section(header: Text("CAR COLOR")){
-                                        TextField("BLACK", text: $vehicileColor)
-                                            .foregroundColor(.white)
-                                        }
-                                    .buttonStyle(.bordered)
-                                    .foregroundColor(.gray)
-                                }
-                            .frame(maxWidth: 147.5, maxHeight: 60)
-                            .padding([.top, .leading])
-                            .padding(.bottom, 10)
-                            .background(Color("gray3"))
-                            .cornerRadius(15)
-                        }
-                        .padding(.top, 10)
-                        
-                        HStack {
-                            VStack (alignment: .leading){
-                                    Section(header: Text("LICENSE PLATE")){
-                                        TextField("B 1234 XYZ", text: $licensePlate)
-                                            .foregroundColor(.white)
-                                        }
-                                    .buttonStyle(.bordered)
-                                    .foregroundColor(.gray)
-                                }
-                            .frame(maxWidth: 147.5, maxHeight: 60)
-                            .padding([.top, .leading])
-                            .padding(.bottom, 10)
-                            .background(Color("gray3"))
-                            .cornerRadius(15)
-                            
-                            VStack (alignment: .leading){
-                                    Section(header: Text("CAPACITY")){
-                                        TextField("1", value: $capacity, formatter: NumberFormatter())
-                                            .foregroundColor(.white)
-                                        }
-                                    .buttonStyle(.bordered)
-                                    .foregroundColor(.gray)
-                                }
-                            .frame(maxWidth: 147.5, maxHeight: 60)
-                            .padding([.top, .leading])
-                            .padding(.bottom, 10)
-                            .background(Color("gray3"))
-                            .cornerRadius(15)
-                        }
-                        .padding(.top, 10)
+                        .padding(.top, 13)
                     }
                     .font(.system(size: 16.0, weight: .medium))
-                    .padding()
                     
                     Spacer()
                     
-                    ButtonView()
-                        
+                    Button{
+                        dataManager.addNewTrip(location: location, date: date, arrival: arrival, departure: departure, vehicletype: vehicleType, color: vehicleColor, license: licensePlate, capacity: capacity, fullname: dataManager.currentUser.fullname ?? "", phone: dataManager.currentUser.phone ?? "")
+                    } label:  {
+                        Text("Share")
+                            .frame(maxWidth: 157, maxHeight: 55)
                     }
-                .padding()
+                    .foregroundColor(.white)
+                    .buttonStyle(.bordered)
+                    .background(Color("Blue"))
+                    .cornerRadius(10)
+                        
                 }
-            .navigationBarBackButtonHidden(true)
+                .navigationBarHidden(true)
+                }
             }
-    }
+    
     
     struct FormView_Previews: PreviewProvider {
         static var previews: some View {
@@ -158,15 +137,20 @@ struct FormView: View {
         @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
         var body: some View {
             ZStack {
-                
-                        Button(action: { presentationMode.wrappedValue.dismiss() }, label: {
-                            HStack {
-                                Image(systemName: "chevron.backward")
-                                    .font(.system(size: 24.0, weight: .bold))
-                                    .foregroundColor(.white)
-                                Spacer()
-                            }
-                        })
+                Color("Blue")
+                    .ignoresSafeArea()
+                    .frame(maxHeight: 98)
+                ZStack {
+                    Button(action: { presentationMode.wrappedValue.dismiss() }, label: {
+                                HStack {
+                                    Image(systemName: "chevron.backward")
+                                        .font(.system(size: 24.0, weight: .bold))
+                                        .foregroundColor(.white)
+                                        .padding(.leading, 20)
+                                    Spacer()
+                                }
+                    })
+                }
                 
                 
                 HStack {
@@ -178,11 +162,6 @@ struct FormView: View {
                     Spacer()
                 }
             }
-            
-            Divider()
-                .frame(height: 1)
-                .overlay(Color("gray2"))
-                .padding(.bottom, 10)
         }
     }
     
@@ -190,15 +169,14 @@ struct FormView: View {
     struct ButtonView: View {
         var body: some View {
             Button{
-                print("Depart Now")
+                print("Share")
             } label:  {
-                Text("Depart Now")
+                Text("Share")
                     .frame(maxWidth: 157, maxHeight: 55)
             }
-            .foregroundColor(.black)
+            .foregroundColor(.white)
             .buttonStyle(.bordered)
-            .background(Color("yellow"))
+            .background(Color("Blue"))
             .cornerRadius(10)
         }
     }
-
