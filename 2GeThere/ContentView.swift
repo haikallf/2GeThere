@@ -14,20 +14,23 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color("primaryColor")
+                Color("Blue")
                     .ignoresSafeArea()
-                
-                VStack {
-                    if !self.isUserCurrentlyLoggedOut {
-                        HomeView(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut, dataManager: _dataManager)
-                    } else {
-                        AuthView(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut, dataManager: _dataManager)
+                ZStack {
+                    Color.white
+                        .ignoresSafeArea(.all, edges: [.leading, .trailing, .bottom])
+                    VStack {
+                        if !self.isUserCurrentlyLoggedOut {
+                            HomeView(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut, dataManager: _dataManager)
+                        } else {
+                            AuthView(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut, dataManager: _dataManager)
+                        }
+                        
+                        Spacer()
                     }
-                    
-                    Spacer()
-                }.padding()
+                }
+                
             }
-           
         }
     }
 }
