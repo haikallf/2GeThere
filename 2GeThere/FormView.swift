@@ -28,7 +28,7 @@ struct FormView: View {
                         VStack (alignment: .leading){
                                 TextField("Location", text: $location)
                                 .padding(20)
-                                .frame(maxWidth: 315, maxHeight: 60)
+                                .frame(maxHeight: 60)
                                 .foregroundColor(.black)
                                 .font(.system(size: 15))
                                 .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
@@ -37,7 +37,7 @@ struct FormView: View {
                         VStack (alignment: .leading){
                             DatePicker("Date", selection: $date, in: Date()..., displayedComponents: .date)
                                 .padding(20)
-                                .frame(maxWidth: 315, maxHeight: 60)
+                                .frame(maxHeight: 60)
                                 .foregroundColor(Color("Gray"))
                                 .font(.system(size: 15))
                                 .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
@@ -47,7 +47,7 @@ struct FormView: View {
                         VStack (alignment: .leading){
                             DatePicker("Arrival", selection: $arrival, in: date..., displayedComponents: .hourAndMinute)
                                 .padding(20)
-                                .frame(maxWidth: 315, maxHeight: 60)
+                                .frame(maxHeight: 60)
                                 .foregroundColor(Color("Gray"))
                                 .font(.system(size: 15))
                                 .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
@@ -56,7 +56,7 @@ struct FormView: View {
                         VStack (alignment: .leading){
                             DatePicker("Departure", selection: $departure, in: date..., displayedComponents: .hourAndMinute)
                                 .padding(20)
-                                .frame(maxWidth: 315, maxHeight: 60)
+                                .frame(maxHeight: 60)
                                 .foregroundColor(Color("Gray"))
                                 .font(.system(size: 15))
                                 .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
@@ -66,7 +66,6 @@ struct FormView: View {
                             VStack (alignment: .leading){
                                 TextField("Vehicle Type", text: $vehicleType)
                                 .padding(20)
-                                .frame(maxWidth: 147.5)
                                 .font(.system(size: 15))
                                 .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
                             }
@@ -76,7 +75,6 @@ struct FormView: View {
                                 TextField("Vehicle Color", text: $vehicleColor)
                                     .foregroundColor(.black)
                                     .padding(20)
-                                    .frame(maxWidth: 147.5)
                                     .font(.system(size: 15))
                                     .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
                             }
@@ -89,7 +87,6 @@ struct FormView: View {
                                 TextField("License Plate", text: $licensePlate)
                                     .foregroundColor(.black)
                                     .padding(20)
-                                    .frame(maxWidth: 147.5)
                                     .font(.system(size: 15))
                                     .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
                             }
@@ -98,7 +95,6 @@ struct FormView: View {
                                 TextField("Capacity", value: $capacity, formatter: NumberFormatter())
                                     .foregroundColor(.black)
                                     .padding(20)
-                                    .frame(maxWidth: 147.5)
                                     .font(.system(size: 15))
                                     .overlay(RoundedRectangle(cornerRadius: 5.0).strokeBorder(Color("Gray"), style: StrokeStyle(lineWidth: 1)))
                                 }
@@ -106,6 +102,7 @@ struct FormView: View {
                         }
                         .padding(.top, 13)
                     }
+                    .padding()
                     .font(.system(size: 16.0, weight: .medium))
                     
                     Spacer()
@@ -133,37 +130,41 @@ struct FormView: View {
         }
     }
     
-    struct Header1: View {
-        @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
-        var body: some View {
-            ZStack {
-                Color("Blue")
-                    .ignoresSafeArea()
-                    .frame(maxHeight: 98)
-                ZStack {
-                    Button(action: { presentationMode.wrappedValue.dismiss() }, label: {
-                                HStack {
-                                    Image(systemName: "chevron.backward")
-                                        .font(.system(size: 24.0, weight: .bold))
-                                        .foregroundColor(.white)
-                                        .padding(.leading, 20)
-                                    Spacer()
-                                }
-                    })
-                }
+struct Header1: View {
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    var body: some View {
+        ZStack {
+            HStack {
+                Spacer()
                 
-                
-                HStack {
-                    Spacer()
-                    Text("Share a Ride")
-                        .font(.custom("Rubik", size: 20))
+                VStack {
+                    
+                    Text("Join a Ride")
+                        .font(.custom("Rubik", size: 14))
                         .fontWeight(.medium)
+                        .foregroundColor(.white)
+                        .textCase(.uppercase)
+                }
+                Spacer()
+            }
+        
+            
+            Button(action: { presentationMode.wrappedValue.dismiss() }, label: {
+                HStack {
+                    Image(systemName: "chevron.backward")
+                        .font(.system(size: 24.0, weight: .bold))
                         .foregroundColor(.white)
                     Spacer()
                 }
-            }
+            })
+            
         }
+        .ignoresSafeArea(.all, edges: [.leading, .trailing])
+        .padding()
+        .background(Color("Blue"))
+        
     }
+}
     
     
     struct ButtonView: View {
