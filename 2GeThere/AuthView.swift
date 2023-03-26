@@ -8,6 +8,8 @@
 import SwiftUI
 import FirebaseAuth
 import Firebase
+let personSymbol = UIImage(named: "custom.person.fill")
+
 
 struct AuthView: View {
     @Binding var isUserCurrentlyLoggedOut: Bool
@@ -18,7 +20,7 @@ struct AuthView: View {
     @State var pin: String =  ""
     @State var phone: String =  ""
     @State var fullname: String =  ""
-    @State var shift: String = "Morning Boys"
+    @State var shift: String = "Morning Boys Broken Branch"
     
     @State var showingAlert = false
     @State var alertMessage = ""
@@ -40,7 +42,7 @@ struct AuthView: View {
             phoneArray.removeFirst()
         }
         
-        var preprocessedPhone = phoneArray.joined(separator: "")
+        let preprocessedPhone = phoneArray.joined(separator: "")
         
         Auth.auth().createUser(withEmail: email, password: pin) { result, error in
             if error != nil {
@@ -83,10 +85,10 @@ struct AuthView: View {
                         alertMessage = "Register Success!"
                         showingAlert = true
                         
-//                            dataManager.setCurrentUser(email: email)
-//                            isUserCurrentlyLoggedOut = false
+                        //                            dataManager.setCurrentUser(email: email)
+                        //                            isUserCurrentlyLoggedOut = false
                     }
-//                dataManager.addNewUser(email: email, fullname: fullname, phone: phone, shift: shift)
+                //                dataManager.addNewUser(email: email, fullname: fullname, phone: phone, shift: shift)
                 
             }
         }
@@ -95,62 +97,103 @@ struct AuthView: View {
     
     var body: some View {
         VStack {
-            TextField("EMAIL", text: $email)
+            VStack (alignment: .leading){
+                //                Text("Welcome to 2GeThere!")
+                //                    .padding()
+                //                    .frame(maxWidth: 315, maxHeight: 60)
+                //                    .foregroundColor(.black)
+                //                    .font(.system(size: 15))
+                //                    .buttonStyle(.bordered)
+                //                    .border(Color("Black"))
+                //                    .cornerRadius(2)
+            }
+            
+            .padding(50)
+            Image("2logo")
+                .resizable()
+                .frame(width: 150, height: 150)
+                .foregroundColor(.white)
+                .background(Color.green)
+                .clipShape(Circle())
+                .padding(.bottom, 35)
+            
+            TextField("Enter your E-mail address", text: $email)
                 .textInputAutocapitalization(.never)
+                .padding()
+                .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                .padding()
             
             SecureField("PIN", text: $pin)
-                .keyboardType(.numberPad)
+                .textInputAutocapitalization(.never)
+                .padding()
+                .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                .padding()
+            
             
             if (!isLogin) {
-                TextField("PHONE", text: $phone)
-                    .keyboardType(.numberPad)
-                TextField("FULLNAME", text: $fullname)
+                TextField("Phone Number", text: $phone)
                     .textInputAutocapitalization(.never)
-                Picker(selection: $shift, label: Text("Shift")) {
-                    Text("Morning Shift").tag("morning")
-                    Text("Afternoon Shift").tag("afternoon")
-                }.pickerStyle(.segmented)
-
-            }
-            
-            Button {
-                if(isLogin) {
-                   login()
-                }
-                else {
-                    register()
-                }
+                    .padding()
+                    .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                    .padding()
+                TextField("Full Name", text: $fullname)
+                    .padding()
+                    .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                    .padding()
                 
-            } label: {
-                Text("\(isLogin ? "Login" : "Register")")
-                    .frame(width: 92, height: 37)
-                    .font(.system(size: 14.0, weight: .medium))
-                    .foregroundColor(Color("yellow"))
-                    .background(Color("primaryColor"))
-                    .cornerRadius(15)
-            }.alert("\(alertMessage)", isPresented: $showingAlert) {
-                Button("OK", role: .cancel) {
-                    showingAlert = false
+            }
+                        Button {
+                            if(isLogin) {
+                                login()
+                            }
+                            else {
+                                register()
+                            }
+            
+                        } label: {
+                            Text("\(isLogin ? "Login" : "Register")")
+                                .frame(width: 157, height: 55)
+                                .font(.system(size: 16.0, weight: .medium))
+                                .background(Color(.blue))
+                                .foregroundColor(Color(.white))
+                                .cornerRadius(15)
+                        }.alert("\(alertMessage)", isPresented: $showingAlert) {
+                            Button("OK", role: .cancel) {
+                                showingAlert = false
+                            }
+                        }
+            
+                        .padding()
+            
+                        Button() {
+                            self.isLogin = !self.isLogin
+                            print($isLogin)
+                        } label: {
+                            if(isLogin) {
+                                Group {
+                                    Text("Don't have an account? ")
+                                        .foregroundColor(Color.black) +
+                                    Text("Register here ")
+                                        .foregroundColor(Color.blue)
+                                }
+                            }
+                            else {
+                                Group {
+                                    Text("Already a member? ")
+                                        .foregroundColor(Color.black) +
+                                    Text("Login here ")
+                                    .foregroundColor(Color.blue)}
+                                .padding()
+                                
+                            }
+                        }
+                    }
+                }
+            
+                struct AuthView_Previews: PreviewProvider {
+                    static var previews: some View {
+                        AuthView(isUserCurrentlyLoggedOut: .constant(true))
+                    }
                 }
             }
             
-            Button() {
-                self.isLogin = !self.isLogin
-                print($isLogin)
-            } label: {
-                if(isLogin) {
-                    Text("Don't have an account? Register")
-                }
-                else {
-                    Text("Have an account? Login")
-                }
-            }
-        }
-    }
-}
-
-struct AuthView_Previews: PreviewProvider {
-    static var previews: some View {
-        AuthView(isUserCurrentlyLoggedOut: .constant(true))
-    }
-}
