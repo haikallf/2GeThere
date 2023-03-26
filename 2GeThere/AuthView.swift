@@ -24,7 +24,6 @@ struct AuthView: View {
     
     @State var showingAlert = false
     @State var alertMessage = ""
-    g
     
     func login() {
         Auth.auth().signIn(withEmail: email, password: pin) { result, error in
