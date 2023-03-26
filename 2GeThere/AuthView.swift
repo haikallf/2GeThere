@@ -118,25 +118,42 @@ struct AuthView: View {
                 .padding(.bottom, 35)
             
             VStack(spacing: 14) {
-                TextField("Enter your E-mail address", text: $email)
-                    .textInputAutocapitalization(.never)
-                    .padding()
-                    .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                HStack {
+                    Image(systemName: "envelope")
+                        .foregroundColor(Color("Gray"))
+                    TextField("Email Address", text: $email)
+                        .textInputAutocapitalization(.never)
+                }
+                .padding()
+                .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
                 
-                SecureField("PIN", text: $pin)
-                    .textInputAutocapitalization(.never)
-                    .padding()
-                    .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                HStack {
+                    Image(systemName: "key")
+                        .foregroundColor(Color("Gray"))
+                    SecureField("PIN", text: $pin)
+                        .textInputAutocapitalization(.never)
+                }
+                .padding()
+                .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                
                 
                 if (!isLogin) {
-                    TextField("Phone Number", text: $phone)
-                        .textInputAutocapitalization(.never)
-                        .padding()
-                        .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                    HStack {
+                        Image(systemName: "phone")
+                            .foregroundColor(Color("Gray"))
+                        TextField("Phone Number", text: $phone)
+                            .textInputAutocapitalization(.never)
+                    }
+                    .padding()
+                    .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
                     
-                    TextField("Full Name", text: $fullname)
-                        .padding()
-                        .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                    HStack {
+                        Image(systemName: "person")
+                            .foregroundColor(Color("Gray"))
+                        TextField("Full Name", text: $fullname)
+                    }
+                    .padding()
+                    .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
                 }
             }.padding([.leading, .trailing])
                         Button {
