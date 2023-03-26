@@ -21,7 +21,7 @@ struct HomeView: View {
                     Header(isUserCurrentlyLoggedOut: $isUserCurrentlyLoggedOut, dataManager: _dataManager)
                 
                     
-                    FormButton()  .padding([.leading, .trailing])
+                    FormButton().padding([.leading, .trailing])
                     
                     Text("SHOWING \(dataManager.trips.count) TRIP(S)")
                         .font(.system(size: 12.0, weight: .medium))
@@ -29,11 +29,15 @@ struct HomeView: View {
                         .foregroundColor(Color("gray4"))
                         .padding([.top, .bottom])  .padding([.leading, .trailing])
                     
-                    ScrollView {
+                    RefreshableScrollView {
                         ForEach($dataManager.trips, id: \.id) { trip in
                             Card(id: trip.id, phone: trip.phone, fullname: trip.fullname, location: trip.location, license: trip.license, arrival: trip.arrival, departure: trip.departure, color: trip.color, vehicletype: trip.vehicletype, capacity: trip.capacity, members: trip.members)
+                                .padding([.leading, .trailing])
+                                .padding(.bottom, 10)
                         }
-                    }  .padding([.leading, .trailing])
+                    } onRefresh: {
+                        dataManager.fetchTrips()
+                    }
                     Spacer()
                 }
             }
@@ -41,53 +45,6 @@ struct HomeView: View {
         .navigationBarTitle("")
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
-//        .navigationTitle("Share a ride")
-//        .toolbar {
-//            Button("Logout") {
-//                print("Logout")
-//            }
-//        }.toolbarBackground (
-//            // 1
-//            Color.pink,
-//            // 2
-//            for: .navigationBar
-//        )
-        
-//        .navigationBarTitleDisplayMode(.inline)
-//        .toolbar {
-//            ToolbarItem(placement: .principal) {
-//                ZStack {
-//                    Text("Join a Ride")
-//                        .font(.custom("Rubik", size: 14))
-//                        .fontWeight(.medium)
-//                        .foregroundColor(.white)
-//
-//                    HStack {
-//                        Spacer()
-//                        Button {
-//                            let firebaseAuth = Auth.auth()
-//                            do {
-//                              try firebaseAuth.signOut()
-//                            } catch let signOutError as NSError {
-//                              print("Error signing out: %@", signOutError)
-//                            }
-//                            isUserCurrentlyLoggedOut = true
-//
-//                        } label: {
-//                            HStack {
-//                                Spacer()
-//
-//                                Image(systemName: "rectangle.portrait.and.arrow.forward")
-//                                    .font(.system(size: 24.0, weight: .bold))
-//                                    .rotation3DEffect(.degrees(180.0), axis: (x: 0, y: 0, z: 1))
-//                                    .foregroundColor(.white)
-//                            }
-//                        }
-//                    }
-//                }
-//
-//            }
-//        }
     }
     
 }

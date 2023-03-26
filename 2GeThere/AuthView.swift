@@ -117,31 +117,28 @@ struct AuthView: View {
                 .clipShape(Circle())
                 .padding(.bottom, 35)
             
-            TextField("Enter your E-mail address", text: $email)
-                .textInputAutocapitalization(.never)
-                .padding()
-                .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
-                .padding()
-            
-            SecureField("PIN", text: $pin)
-                .textInputAutocapitalization(.never)
-                .padding()
-                .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
-                .padding()
-            
-            
-            if (!isLogin) {
-                TextField("Phone Number", text: $phone)
+            VStack(spacing: 14) {
+                TextField("Enter your E-mail address", text: $email)
                     .textInputAutocapitalization(.never)
                     .padding()
                     .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
-                    .padding()
-                TextField("Full Name", text: $fullname)
+                
+                SecureField("PIN", text: $pin)
+                    .textInputAutocapitalization(.never)
                     .padding()
                     .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
-                    .padding()
                 
-            }
+                if (!isLogin) {
+                    TextField("Phone Number", text: $phone)
+                        .textInputAutocapitalization(.never)
+                        .padding()
+                        .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                    
+                    TextField("Full Name", text: $fullname)
+                        .padding()
+                        .overlay(RoundedRectangle(cornerRadius: 10.0).strokeBorder(Color.black, style: StrokeStyle(lineWidth: 0.5)))
+                }
+            }.padding([.leading, .trailing])
                         Button {
                             if(isLogin) {
                                 login()
@@ -154,7 +151,7 @@ struct AuthView: View {
                             Text("\(isLogin ? "Login" : "Register")")
                                 .frame(width: 157, height: 55)
                                 .font(.system(size: 16.0, weight: .medium))
-                                .background(Color(.blue))
+                                .background(Color("Blue"))
                                 .foregroundColor(Color(.white))
                                 .cornerRadius(15)
                         }.alert("\(alertMessage)", isPresented: $showingAlert) {
@@ -174,7 +171,7 @@ struct AuthView: View {
                                     Text("Don't have an account? ")
                                         .foregroundColor(Color.black) +
                                     Text("Register here ")
-                                        .foregroundColor(Color.blue)
+                                        .foregroundColor(Color("Blue"))
                                 }
                             }
                             else {
@@ -182,7 +179,7 @@ struct AuthView: View {
                                     Text("Already a member? ")
                                         .foregroundColor(Color.black) +
                                     Text("Login here ")
-                                    .foregroundColor(Color.blue)}
+                                    .foregroundColor(Color("Blue"))}
                                 .padding()
                                 
                             }

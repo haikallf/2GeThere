@@ -25,6 +25,7 @@
 		DEE0D38929C9A55100A0DA56 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE0D38829C9A55100A0DA56 /* DataManager.swift */; };
 		DEE0D38B29C9C54C00A0DA56 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE0D38A29C9C54C00A0DA56 /* User.swift */; };
 		DEE0D38D29CA461600A0DA56 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE0D38C29CA461600A0DA56 /* Member.swift */; };
+		DEEC60B329D0BA9F008F33AD /* RefreshableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEEC60B229D0BA9F008F33AD /* RefreshableScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		DEE0D38829C9A55100A0DA56 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		DEE0D38A29C9C54C00A0DA56 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DEE0D38C29CA461600A0DA56 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		DEEC60B229D0BA9F008F33AD /* RefreshableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshableScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 				C50A18B029C4C124009F0C9F /* -GeThere-Info.plist */,
 				DE67E79D29C3916D00E6908F /* _GeThereApp.swift */,
 				DE67E79F29C3916D00E6908F /* HomeView.swift */,
+				DEEC60B229D0BA9F008F33AD /* RefreshableScrollView.swift */,
 				C585B4F629CCA91C00C61AD8 /* ContentView.swift */,
 				DEE0D38829C9A55100A0DA56 /* DataManager.swift */,
 				DEE0D38C29CA461600A0DA56 /* Member.swift */,
@@ -310,6 +313,7 @@
 				DE67E79E29C3916D00E6908F /* _GeThereApp.swift in Sources */,
 				DEE0D38B29C9C54C00A0DA56 /* User.swift in Sources */,
 				DEE0D38D29CA461600A0DA56 /* Member.swift in Sources */,
+				DEEC60B329D0BA9F008F33AD /* RefreshableScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
