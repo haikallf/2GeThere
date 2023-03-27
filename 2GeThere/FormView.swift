@@ -139,7 +139,7 @@ struct Header1: View {
                 
                 VStack {
                     
-                    Text("Join a Ride")
+                    Text("Share a Ride")
                         .font(.custom("Rubik", size: 14))
                         .fontWeight(.medium)
                         .foregroundColor(.white)
