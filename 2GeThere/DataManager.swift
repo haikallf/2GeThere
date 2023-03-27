@@ -36,8 +36,8 @@ class DataManager: ObservableObject {
                     let fullname = data["fullname"] as? String ?? ""
                     let location = data["location"] as? String ?? ""
                     let license = data["license"] as? String ?? ""
-                    let arrival = data["arrival"] as? Date ?? Date()
-                    let departure = data["departure"] as? Date ?? Date()
+                    let arrival = (data["arrival"] as? Timestamp)?.dateValue() ?? Date()
+                    let departure = (data["departure"] as? Timestamp)?.dateValue() ?? Date()
                     let color = data["color"] as? String ?? ""
                     let vehicletype = data["vehicletype"] as? String ?? ""
                     let capacity = data["capacity"] as? Int ?? 0
@@ -47,8 +47,6 @@ class DataManager: ObservableObject {
                     array = array.filter({ $0 != ""})
                     
                     let trip = Trip(id: id, phone: phone, fullname: fullname, location: location, license: license, arrival: arrival, departure: departure, color: color, vehicletype: vehicletype, capacity: capacity, members: array)
-                    
-                    print("masuk")
                     self.trips.append(trip)
                 }
             }
